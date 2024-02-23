@@ -13,6 +13,7 @@
 </body>
 </html>
 <?php
+
 if (isset($_POST['register'])) {
     // 連接到數據庫
     $conn = new mysqli('localhost', 'your_username', 'your_password', 'your_database');
@@ -22,9 +23,10 @@ if (isset($_POST['register'])) {
         die("連接失敗: " . $conn->connect_error);
     }
 
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // 對密碼進行加密
+    $username = $_POST['username'];
+    $password = $_POST['password']; 
 
+    // 直接將用戶輸入拼接到SQL語句中，存在SQL注入的風險
     $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
 
     if ($conn->query($sql) === TRUE) {
